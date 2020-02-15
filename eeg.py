@@ -4,10 +4,10 @@ import ssl
 import time
 import requests
 
-import connect
+from connect import*
 
 
-ws.send(json.dumps({
+send_request({
     "id": 1,
     "jsonrpc": "2.0",
     "method": "requestAccess",
