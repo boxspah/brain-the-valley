@@ -34,7 +34,6 @@ result = ws.recv()
 result_dic = json.loads(result)
 auth = result_dic['result']['cortexToken']
 
-
 ws.send(json.dumps({
     "id": 1,
     "jsonrpc": "2.0",
