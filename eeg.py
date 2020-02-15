@@ -4,7 +4,8 @@ import ssl
 import time
 import requests
 
-ws = create_connection("wss://localhost:6868", sslopt={"cert_reqs": ssl.CERT_NONE})
+import connect
+
 
 ws.send(json.dumps({
     "id": 1,
