@@ -9,50 +9,34 @@ from bind import Bind
 
 class Control:
     def __init__(self):
-        connection_url = "wss://localhost:6868"
-        user = {
-            "client_id": "NZjtUNCOiaPP7gMkNSucchM7jATzNY386Aq2hMI7",
-            "client_secret": "526x2Afu46XG6eMMfkJ7Him3QKszzys9Bs4ABKcAVhLa6xfIfSbTs1ZmziBqYcOHWvup3N9XqBo9GbhMAqh2sWSGKQgj5k30PQUwocFaq1haP4eb3oUKMlUp70ZmoOG9",
-            "license": "",
-            "debit": 500,
-        }
-        self.headset = Cortex(connection_url, user)
-
         self.window = Tk()
         self.window.title('Wave.ly Control Panel')
 
         # handle window close event
         self.window.protocol('WM_DELETE_WINDOW', self.close)
 
+    def setup(self, cortex):
         # connected headset info
-        self.headset_id = None
         headset_id_label = LabelFrame(text='Current headset ID', relief=GROOVE)
-        headset_id_display = Entry(headset_id_label, self.headset_id, width=50)
+        headset_id_display = Entry(headset_id_label, "", width=50)
         headset_id_display.insert(0, 'No headset connected')
         headset_id_display.config(state='readonly')
         headset_id_display.pack()
         headset_id_label.pack()
 
-
         buttons = Frame()
-        connect = Button(buttons, text="Connect to headset", command=self.connect)
+        connect = Button(buttons, text="Connect to headset", command=cortex.grant_access_and_session_info)
         connect.pack()
         edit_binds = Button(buttons, text="Edit bindings", command=self.edit)
         edit_binds.pack()
-        terminate =  Button(buttons, text="Exit", command=self.close)
+        terminate = Button(buttons, text="Exit", command=self.close)
         terminate.pack()
         buttons.pack(fill=BOTH)
 
         self.window.minsize(400, 300)
+
+    def run_mainloop(self):
         self.window.mainloop()
-
-    def connect(self):
-        """
-        Initiates connection with headset through connect.py.
-
-        Returns connection variable.
-        """
-        self.headset.grant_access_and_session_info()
 
     def edit(self):
         """
