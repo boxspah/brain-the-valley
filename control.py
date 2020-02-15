@@ -33,7 +33,7 @@ class Control:
 
 
         buttons = tk.Frame(padx=10, pady=10)
-        connect = tk.Button(buttons, text="Connect to headset", state=tk.DISABLED)
+        connect = tk.Button(buttons, text="Connect to headset", command=self.connect)
         connect.pack()
         edit_binds = tk.Button(buttons, text="Edit bindings", command=self.edit)
         edit_binds.pack()
