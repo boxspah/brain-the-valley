@@ -1,1 +1,3 @@
-# brain-the-valley
+Wave_BCI
+
+Open Your Mind
