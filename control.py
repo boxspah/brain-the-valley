@@ -10,7 +10,10 @@ from bind import Bind
 class Control:
     def __init__(self):
         self.window = Tk()
+        self.window.resizable(0, 0)
         self.window.title('Wave.ly Control Panel')
+
+        Style().configure('TButton', padding=7, relief='flat')
 
         # handle window close event
         self.window.protocol('WM_DELETE_WINDOW', self.close)
@@ -22,16 +25,16 @@ class Control:
         headset_id_display.insert(0, 'No headset connected')
         headset_id_display.config(state='readonly')
         headset_id_display.pack()
-        headset_id_label.pack()
+        headset_id_label.pack(expand=1)
 
         buttons = Frame()
         connect = Button(buttons, text="Connect to headset", command=cortex.grant_access_and_session_info)
-        connect.pack()
+        connect.pack(pady=7)
         edit_binds = Button(buttons, text="Edit bindings", command=self.edit)
-        edit_binds.pack()
+        edit_binds.pack(pady=7)
         terminate = Button(buttons, text="Exit", command=self.close)
-        terminate.pack()
-        buttons.pack(fill=BOTH)
+        terminate.pack(pady=7)
+        buttons.pack(fill=BOTH, anchor=CENTER, expand=1)
 
         self.window.minsize(400, 300)
 
