@@ -52,8 +52,6 @@ class Cortex:
                 print(e)
                 return e
 
-
-
     def connect_headset(self):
         CONNECT_HEADSET_ID = 111
 
