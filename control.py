@@ -6,6 +6,7 @@ from cortex import Cortex
 # external GUIs
 from bind import Bind
 
+
 class Control:
     def __init__(self):
         connection_url = "wss://localhost:6868"
@@ -15,7 +16,7 @@ class Control:
             "license": "",
             "debit": 500,
         }
-        self.headset = Cortex(connection_url,user)
+        self.headset = Cortex(connection_url, user)
 
         self.window = Tk()
         self.window.title('Wave.ly Control Panel')
