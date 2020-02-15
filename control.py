@@ -54,14 +54,14 @@ class Control:
         """
         self.headset.grant_access_and_session_info()
 
-    def edit(self, conn):
+    def edit(self):
         """
         Creates new window for user to access binding / training settings.
 
         Parameters:
         conn    connection variable
         """
-        nw = Bind(conn)
+        nw = Bind()
 
     def close(self):
         """
