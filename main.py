@@ -1,7 +1,26 @@
-#mport eeg
-import keyboard as kb
+#import eeg
+from pynput.mouse import Button, Controller
 
-kb.add_hotkey('a', lambda: kb.write('Geek'))
-kb.add_hotkey('ctrl + shift + a', print, args=('you entered', 'hotkey'))
+mouse = Controller()
 
-kb.wait('esc')
+# Read pointer position
+print('The current pointer position is {0}'.format(
+    mouse.position))
+
+# Set pointer position
+mouse.position = (500, 500)
+print('Now we have moved it to {0}'.format(
+    mouse.position))
+
+# Move pointer relative to current position
+mouse.move(5, -5)
+
+# Press and release
+mouse.press(Button.left)
+mouse.release(Button.left)
+
+# Double click; this is different from pressing and releasing
+# twice on Mac OSX
+
+# Scroll two steps down
+mouse.scroll(0, 2)
