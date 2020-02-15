@@ -64,6 +64,7 @@ ws.send(json.dumps({
 
 print(ws.recv())
 
+input_signals = ["com", "mot"]  #TODO: Change this to data we need to use
 ws.send(json.dumps({
     "id": 1,
     "jsonrpc": "2.0",
@@ -71,7 +72,7 @@ ws.send(json.dumps({
     "params": {
         "cortexToken": auth,
         "session": session_id,
-        "streams": ["com"]
+        "streams": input_signals
     }
 }))
 
@@ -79,5 +80,9 @@ print('\n')
 print(ws.recv())
 
 while True:
-    mental_command = json.loads(ws.recv())["com"][0]
-    print(mental_command)
+    mental_command = json.loads(ws.recv())
+    for input in input_signals:
+        try:
+            print(mental_command[input])
+        except KeyError:
+            continue
