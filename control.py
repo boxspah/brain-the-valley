@@ -1,5 +1,6 @@
-import tkinter as tk
+from tkinter import *
 import tkinter.messagebox
+from tkinter.ttk import *
 from cortex import Cortex
 
 # external GUIs
@@ -16,7 +17,7 @@ class Control:
         }
         self.headset = Cortex(connection_url,user)
 
-        self.window = tk.Tk()
+        self.window = Tk()
         self.window.title('Wave.ly Control Panel')
 
         # handle window close event
@@ -24,22 +25,22 @@ class Control:
 
         # connected headset info
         self.headset_id = None
-        headset_id_label = tk.LabelFrame(text='Current headset ID', bd=3, relief=tk.GROOVE, padx=10, pady=5)
-        headset_id_display = tk.Entry(headset_id_label, self.headset_id, width=50)
+        headset_id_label = LabelFrame(text='Current headset ID', relief=GROOVE)
+        headset_id_display = Entry(headset_id_label, self.headset_id, width=50)
         headset_id_display.insert(0, 'No headset connected')
         headset_id_display.config(state='readonly')
         headset_id_display.pack()
-        headset_id_label.pack(padx=5)
+        headset_id_label.pack()
 
 
-        buttons = tk.Frame(padx=10, pady=10)
-        connect = tk.Button(buttons, text="Connect to headset", command=self.connect)
+        buttons = Frame()
+        connect = Button(buttons, text="Connect to headset", command=self.connect)
         connect.pack()
-        edit_binds = tk.Button(buttons, text="Edit bindings", command=self.edit)
+        edit_binds = Button(buttons, text="Edit bindings", command=self.edit)
         edit_binds.pack()
-        terminate =  tk.Button(buttons, text="Exit", command=self.close)
+        terminate =  Button(buttons, text="Exit", command=self.close)
         terminate.pack()
-        buttons.pack(fill=tk.BOTH)
+        buttons.pack(fill=BOTH)
 
         self.window.minsize(400, 300)
         self.window.mainloop()
