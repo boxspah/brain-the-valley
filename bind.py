@@ -1,5 +1,5 @@
 from tkinter import *
-import tkinter.messagebox
+from tkinter.messagebox import *
 from tkinter.ttk import *
 
 class Bind:
@@ -28,5 +28,5 @@ class Bind:
         Deletes window without saving changes.
         See `save_close` for window exit while retaining changes.
         """
-        if tkinter.messagebox.askokcancel("Quit", "Are you sure that you want to exit? Changes will be not saved."):
+        if askokcancel("Discard changes?", "Are you sure that you want to exit? Changes will be not saved.", icon=WARNING, default=CANCEL):
             self.window.destroy()
