@@ -44,7 +44,6 @@ class Control:
         # set minimum window size to 400x300
         self.window.minsize(400, 300)
 
-    def run_mainloop(self):
         self.window.mainloop()
 
     def edit(self):
