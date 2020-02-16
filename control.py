@@ -4,6 +4,7 @@ from tkinter.ttk import *
 from cortex import Cortex
 from scipy.spatial.transform import Rotation as R
 from pynput import mouse, keyboard
+import keyboard as kb
 from helper import *
 
 # external GUIs
@@ -114,11 +115,11 @@ class Control:
         elif list(signal.keys())[0] == "com":
             mental_cmd = signal["com"]
             if mental_cmd[0] == "push":
-                self.ms.click(mouse.Button.left)
-                print("moving")
-            #elif mental_cmd[0] == "lift":
-            #   ms.click(Button.left)
-            #  print("clicking")
+                kb.press_and_release('up')
+                print("jumping")
+            elif mental_cmd[0] == "lift":
+                kb.press_and_release('left')
+                print("kicking")
         self.window.after(0, self.motion_sensor)
     
     def update_window(self):
