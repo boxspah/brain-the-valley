@@ -21,7 +21,6 @@ headset = Cortex(connection_url, user)
 
 main = Control()
 main.setup(headset)
-main.run_mainloop()
 headset.setup_profile("Asad")
 headset.subRequest(["mot"])
 
