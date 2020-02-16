@@ -2,6 +2,8 @@ from datetime import datetime
 import json
 import ssl
 import time
+from tkinter import *
+from tkinter.ttk import *
 # install with pip install websocket-client
 import websocket
 
@@ -12,9 +14,22 @@ class Cortex:
         self.user = user
 
     def query_headset(self):
-        QUERY_HEADSET_ID = 2
+        tk = Toplevel()
+        tk.title('Connecting to headset...')
+
+        # force window to stay on top
+        tk.attributes('-topmost', 1)
+
         connect_tries = 0
+        Label(tk, text="Please wait.").grid()
+        Label(tk, text="Attempting to connect to headset.").grid()
+        trying = Progressbar(tk, orient=HORIZONTAL, value=0, mode='determinate')
+        trying.grid()
+
+        QUERY_HEADSET_ID = 2
         while True:
+            tk.update_idletasks()
+            tk.update()
             try:
                 self.ws.send(json.dumps(
                     {
@@ -26,6 +41,7 @@ class Cortex:
                 result = json.loads(self.ws.recv())
 
                 connect_tries += 1
+                trying['value'] = connect_tries * 10
                 time.sleep(1)
 
                 if connect_tries > 10:
@@ -37,6 +53,7 @@ class Cortex:
                     raise AttributeError
                 self.headset_id = result['result'][0]['id']
                 print(self.headset_id)
+                tk.destroy()
                 return result
 
             except ConnectionError:
@@ -48,9 +65,6 @@ class Cortex:
             except AttributeError:
                 print(", attempting to establish a secure connection")
                 continue
-            except Exception(e):
-                print(e)
-                return e
 
     def connect_headset(self):
         CONNECT_HEADSET_ID = 111
@@ -175,7 +189,8 @@ class Cortex:
     def grant_access_and_session_info(self):
         query = self.query_headset()
         if query == Exception or query == 400:  # checks whether to continue with the program
-            exit(0)
+            print("connection attempt failed")
+            return
         self.connect_headset()
         self.request_access()
         self.authorize()
@@ -464,3 +479,35 @@ class Cortex:
 
     def recieve_signal(self):
         return json.loads(self.ws.recv())
+
+    def start_training(self):
+        START_TRAINING_REQUEST_ID = 420
+        start_training_request = {
+            'jsonrpc': '2.0',
+            "method": "training",
+            "params": {
+                "action": "push",
+                "cortexToken": self.auth,
+                "detection": "mentalCommand",
+                "session": self.session_id,
+                "status": "start"
+            },
+            'id': START_TRAINING_REQUEST_ID
+        }
+
+        self.ws.send(json.dumps(start_training_request))
+        self.ws.recv()
+
+    def guest_profile(self):
+        START_GUEST_PROFILE_ID = 54
+        guest_request = {
+            "id": START_GUEST_PROFILE_ID,
+            "jsonrpc": "2.0",
+            "method": "loadGuestProfile",
+            "params": {
+                "cortexToken": self.auth,
+                "headset": "INSIGHT-12341234"
+            }
+        }
+        self.ws.send(json.dumps(guest_request))
+        self.ws.recv()
