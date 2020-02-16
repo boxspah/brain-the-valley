@@ -7,13 +7,17 @@ class Bind:
         self.window.title('Edit bindings')
         
         # handle window close event
-        self.window.protocol('WM_DELETE_WINDOW', self.close)
+        self.window.protocol('WM_DELETE_WINDOW', self.force_close)
 
         self.window.mainloop()
 
-    def close(self):
+    def save_close(self, param, value):
+        change_bindings()
+
+    def force_close(self):
         """
-        Deletes main window and terminates program.
+        Deletes window without saving changes.
+        See `save_close` for window exit while retaining changes.
         """
         if tkinter.messagebox.askokcancel("Quit", "Are you sure that you want to exit? Changes will be not saved."):
             self.window.destroy()

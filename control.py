@@ -6,27 +6,35 @@ from cortex import Cortex
 # external GUIs
 from bind import Bind
 
-
 class Control:
     def __init__(self):
         self.window = Tk()
-        self.window.resizable(0, 0)
-        self.window.title('Wave.ly Control Panel')
 
-        Style().configure('TButton', padding=7, relief='flat')
+        # disable maximize button
+        self.window.resizable(0, 0)
+
+        # set window title
+        self.window.title('Wave.ly Control Panel')
 
         # handle window close event
         self.window.protocol('WM_DELETE_WINDOW', self.close)
 
     def setup(self, cortex):
-        # connected headset info
+        """
+        Configure and create all widgets, and link connection to dialog.
+        """
+        # set default styling for buttons
+        Style().configure('TButton', padding=7, relief='flat')
+        
+        # display connected headset info
         headset_id_label = LabelFrame(text='Current headset ID', relief=GROOVE)
-        headset_id_display = Entry(headset_id_label, "", width=50)
+        headset_id_display = Entry(headset_id_label, width=50)
         headset_id_display.insert(0, 'No headset connected')
         headset_id_display.config(state='readonly')
         headset_id_display.pack()
         headset_id_label.pack(expand=1)
 
+        # actions menu
         buttons = Frame()
         connect = Button(buttons, text="Connect to headset", command=cortex.grant_access_and_session_info)
         connect.pack(pady=7)
@@ -36,6 +44,7 @@ class Control:
         terminate.pack(pady=7)
         buttons.pack(fill=BOTH, anchor=CENTER, expand=1)
 
+        # set minimum window size to 400x300
         self.window.minsize(400, 300)
 
     def run_mainloop(self):
@@ -44,9 +53,6 @@ class Control:
     def edit(self):
         """
         Creates new window for user to access binding / training settings.
-
-        Parameters:
-        conn    connection variable
         """
         nw = Bind()
 
