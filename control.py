@@ -1,5 +1,5 @@
 from tkinter import *
-import tkinter.messagebox
+from tkinter.messagebox import *
 from tkinter.ttk import *
 from cortex import Cortex
 
@@ -36,12 +36,9 @@ class Control:
 
         # actions menu
         buttons = Frame()
-        connect = Button(buttons, text="Connect to headset", command=cortex.grant_access_and_session_info)
-        connect.pack(pady=7)
-        edit_binds = Button(buttons, text="Edit bindings", command=self.edit)
-        edit_binds.pack(pady=7)
-        terminate = Button(buttons, text="Exit", command=self.close)
-        terminate.pack(pady=7)
+        connect = Button(buttons, text="Connect to headset", command=cortex.grant_access_and_session_info).pack(pady=7)
+        Button(buttons, text="Edit bindings", command=self.edit).pack(pady=7)
+        Button(buttons, text="Exit", command=self.close).pack(pady=7)
         buttons.pack(fill=BOTH, anchor=CENTER, expand=1)
 
         # set minimum window size to 400x300
@@ -60,6 +57,6 @@ class Control:
         """
         Deletes main window and terminates program.
         """
-        if tkinter.messagebox.askokcancel("Quit", "Are you sure you want to quit? Wave.ly will stop running."):
+        if askokcancel("Quit Wave.ly?", "Are you sure you want to quit? Wave.ly will stop running.", icon=WARNING, default=CANCEL):
             self.window.destroy()
             raise SystemExit('Program terminated by user')
