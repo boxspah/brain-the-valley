@@ -15,10 +15,10 @@ def sma(data, window):
     """
     if len(data) < window:
         return None
-    return sum(data[-window:]) / float(window)
+    return [sum(x for x,y in data[-window:])/window, sum(y for x,y in data[-window:])/window]
 
 
-def ema_filter(curr,prev,weight,n):
+def ema_filter(curr,prev,weight):
     EWMF = []
     for c,p,w in zip(curr,prev,weight):
         EWMF.append((1-w)*p+w*c)
