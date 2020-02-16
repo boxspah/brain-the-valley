@@ -3,6 +3,7 @@ def clamp(x,upper,lower):
         return upper
     if x<lower:
         return lower
+    return x
 
 def scale(x,a,b,c,d):
     return (x-a) * (d-c)/(b-a) + c
