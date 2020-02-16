@@ -124,6 +124,7 @@ class Cortex:
         result_dic = json.loads(result)
         print('create session result ', json.dumps(result_dic, indent=4))
         self.session_id = result_dic['result']['id']
+        print(self.session_id)
 
     def setup_profile(self, name):
         SETUP_PROFILE_ID = 13
