@@ -62,8 +62,6 @@ ws.send(json.dumps({
     }
 }))
 
-print(ws.recv())
-
 input_signals = ["com", "mot"]  #TODO: Change this to data we need to use
 ws.send(json.dumps({
     "id": 1,
@@ -75,9 +73,6 @@ ws.send(json.dumps({
         "streams": input_signals
     }
 }))
-
-print('\n')
-print(ws.recv())
 
 while True:
     mental_command = json.loads(ws.recv())
