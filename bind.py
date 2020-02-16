@@ -11,7 +11,14 @@ class Bind:
 
         self.window.mainloop()
 
-    def save_close(self, param, value):
+    def save_close(self, command, action):
+        """
+        Saves changes to config.txt and deletes window.
+
+        Parameters:
+        command     target mind command
+        action      keyboard action to be bound to `command`
+        """
         change_bindings()
 
     def force_close(self):
