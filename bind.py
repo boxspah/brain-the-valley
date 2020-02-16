@@ -1,14 +1,16 @@
-import tkinter as tk
+from tkinter import *
 import tkinter.messagebox
+from tkinter.ttk import *
 
 class Bind:
     def __init__(self):
-        self.window = tk.Tk()
+        self.window = Tk()
         self.window.title('Edit bindings')
-        
+
         # handle window close event
         self.window.protocol('WM_DELETE_WINDOW', self.force_close)
 
+    def run_mainloop(self):
         self.window.mainloop()
 
     def save_close(self, command, action):
