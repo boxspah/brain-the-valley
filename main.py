@@ -9,7 +9,7 @@ import json
 from helper import *
 import time
 
-screen_w, screen_h = 1920,1080
+screen_w, screen_h = 1366, 768
 connection_url = "wss://localhost:6868"
 user = {
     "client_id": "NZjtUNCOiaPP7gMkNSucchM7jATzNY386Aq2hMI7",
@@ -85,18 +85,18 @@ while True:
         prev = ema_filter(conv, prev, [0.7, 0.7, 0.7])
         ms_list.append(prev)
         n=5
-
+        l = 20
         if len(ms_list)>=  n:
-            ms.position = [sum(x for x,y in ms_list)/n , sum(y for x,y in ms_list)/n]
+            ms.position = [(sum(x for x,y in ms_list)/n)//l *l , (sum(y for x,y in ms_list)/n)//l*l]
             ms_list.pop(0)
 
         print(ms.position)
-            # ms_list.pop(0)
+            # ms_list.pop(0)wwww
     elif list(signal.keys())[0] == "com":
         mental_cmd = signal["com"]
         if mental_cmd[0] == "push":
-            kb.press_and_release('w')
-            print("moving")
-        elif mental_cmd[0] == "lift":
             ms.click(Button.left)
-            print("clicking")
+            print("moving")
+        #elif mental_cmd[0] == "lift":
+         #   ms.click(Button.left)
+          #  print("clicking")
