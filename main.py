@@ -1,9 +1,10 @@
 from control import Control
 from cortex import Cortex
 from scipy.spatial.transform import Rotation as R
-from pynput import mouse, keyboard
+from pynput import mouse,keyboard
 from pynput.mouse import Button, Controller
-
+import keyboard as kb
+import asyncio
 import json
 from helper import *
 import time
@@ -22,8 +23,11 @@ headset = Cortex(connection_url, user)
 
 main = Control()
 main.setup(headset)
+headset.grant_access_and_session_info( )
+
 headset.setup_profile("Asad")
 headset.subRequest(["com", "mot"])
+
 
 ms = Controller()
 
@@ -55,6 +59,7 @@ prev = [screen_h / 2, screen_w / 2]
 ms.position = (0, 0)
 ms_list = []
 while True:
+    main.loop()
     signal = headset.recieve_signal()
     if list(signal.keys())[0] == 'mot':
         quaternion = signal["mot"][2:6]
@@ -90,11 +95,8 @@ while True:
     elif list(signal.keys())[0] == "com":
         mental_cmd = signal["com"]
         if mental_cmd[0] == "push":
+            kb.press_and_release('w')
+            print("moving")
+        elif mental_cmd[0] == "lift":
             ms.click(Button.left)
             print("clicking")
-        elif mental_cmd[0] == "lift":
-           # with ms.pressed(Key.ctrl):
-                #ms.press('z')
-                #ms.release('z')
-            print("undoing")
-        #print(mental_cmd)
