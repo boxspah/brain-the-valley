@@ -4,8 +4,6 @@ from tkinter.ttk import *
 from cortex import Cortex
 from scipy.spatial.transform import Rotation as R
 from pynput import mouse, keyboard
-import time
-from win32api import GetSystemMetrics
 from helper import *
 
 # external GUIs
