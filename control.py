@@ -2,7 +2,8 @@ from tkinter import *
 from tkinter.messagebox import *
 from tkinter.ttk import *
 from cortex import Cortex
-
+import asyncio
+import time
 # external GUIs
 from bind import Bind
 
