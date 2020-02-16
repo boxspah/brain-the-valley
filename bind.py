@@ -36,8 +36,8 @@ class Bind:
             Button(self.window, text="Re-bind").grid(row=i, column=3)
 
         # bottom buttons
-        Button(self.window, text='Save and Exit', command=self.save_close(self.bindings)).grid(row=4, column=0, colspan=2)
-        Button(self.window, text='Exit without saving', command=self.force_close()).grid(row=4, column=2, colspan=2)
+        Button(self.window, text='Save and Exit', command=self.save_close).grid(row=4, column=0, columnspan=2)
+        Button(self.window, text='Exit without saving', command=self.force_close).grid(row=4, column=2, columnspan=2)
 
     def run_mainloop(self):
         self.window.mainloop()
@@ -49,8 +49,8 @@ class Bind:
         Parameters:
         command     the command to be rebound
         """
-        capture_input()
-        reset_training()
+        print("This will capture input")
+        print("This will reset training data for this binding")
 
     def train(self, command):
         """
@@ -59,17 +59,14 @@ class Bind:
         Parameters:
         command     the command to be trained
         """
-        start_training()
+        print("This will start a training session")
 
-    def save_close(self, config):
+    def save_close(self):
         """
         Saves changes to config.txt and deletes window.
-
-        Parameters:
-        command     target mind command
-        action      keyboard action to be bound to `command`
         """
-        change_bindings()
+        print("This will write the new bindings to config.txt")
+        self.window.destroy()
 
     def force_close(self):
         """

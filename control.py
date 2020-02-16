@@ -52,6 +52,7 @@ class Control:
         Creates new window for user to access binding / training settings.
         """
         nw = Bind()
+        nw.run_mainloop()
 
     def close(self):
         """
