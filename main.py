@@ -5,6 +5,7 @@ from pynput import mouse, keyboard
 from pynput.mouse import Button, Controller
 import json
 from helper import *
+import input
 connection_url = "wss://localhost:6868"
 user = {
     "client_id": "NZjtUNCOiaPP7gMkNSucchM7jATzNY386Aq2hMI7",
@@ -19,37 +20,37 @@ headset.subRequest(["mot"])
 
 ms = Controller()
 
-screen_w = 1920
-screen_h = 1080
-prev = [screen_h/2, 0, screen_w/2]
+
+prev = [input.screen_h/2, input.screen_w/2,0]
 while True:
     signal = headset.recieve_signal()
     quaternion = signal["mot"][2:6]
     r = R.from_quat(quaternion)
-    rot = r.as_euler('xzy', degrees=True)
-    print(rot, end=' ')
-    rot = [
+    input.rot = r.as_euler('xzy', degrees=True)
+    print(input.rot, end=' ')
+    input.rot = [
         clamp(
             scale(
-                rot[0],
-                -50,
-                -60,
+                input.rot[0],
+                zero_pos[0],
+                zero_pos[0]-10,
                 0,
                 screen_w
             ), 0, screen_w
         ),
         clamp(
             scale(
-                rot[1],
-                -78,
-                -90,
+                input.rot[1],
+                zero_pos[1],
+                zero_pos[1]+15,
                 0,
                 screen_h
             ), 0, screen_h
-        )
+        ),
+        0
     ]
     print(prev)
-    prev = ema_filter(rot, prev, [0.2,0.2,0.2])
+    prev = ema_filter(input.rot, prev, [0.2,0.2,0.2])
 
 
 
