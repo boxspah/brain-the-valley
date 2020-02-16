@@ -15,7 +15,7 @@ send_request({
         "clientId": "NZjtUNCOiaPP7gMkNSucchM7jATzNY386Aq2hMI7",
         "clientSecret": "526x2Afu46XG6eMMfkJ7Him3QKszzys9Bs4ABKcAVhLa6xfIfSbTs1ZmziBqYcOHWvup3N9XqBo9GbhMAqh2sWSGKQgj5k30PQUwocFaq1haP4eb3oUKMlUp70ZmoOG9"
     }
-}))
+})
 
 result = ws.recv()
 result_dic = json.loads(result)

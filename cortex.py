@@ -125,7 +125,23 @@ class Cortex:
         print('create session result ', json.dumps(result_dic, indent=4))
         self.session_id = result_dic['result']['id']
 
-    # print(self.session_id)
+    def setup_profile(self, name):
+        SETUP_PROFILE_ID = 13
+        setup_profile_request = {
+            "id": SETUP_PROFILE_ID,
+            "jsonrpc": "2.0",
+            "method": "setupProfile",
+            "params": {
+                "cortexToken": self.auth,
+                "headset": self.headset_id,
+                "profile": name,
+                "status": "load"
+            }
+        }
+        self.ws.send(json.dumps(setup_profile_request))
+        result = self.ws.recv()
+        result_dic = json.loads(result)
+        print('create session result ', json.dumps(result_dic, indent=4))
 
     def close_session(self):
         CREATE_SESSION_ID = 117
@@ -439,18 +455,11 @@ class Cortex:
         }
 
         self.ws.send(json.dumps(subRequest))
-
-        data = ""
-        print('\n')
-        print('subscribe result')
-        for i in range(1, self.user['number_row_data']):
-            new_data = self.ws.recv()
-            data += new_data
-            print(new_data)
-        print('\n')
-
-        return data
+        self.ws.recv()
 
     def sub(self, stream):
         self.grant_access_and_session_info()
         self.subRequest(stream)
+
+    def recieve_signal(self):
+        return json.loads(self.ws.recv())
